@@ -17,14 +17,31 @@ This package is the official Laravel integration for [Pirsch Analytics](https://
 
    PIRSCH_TOKEN=pa_xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
    ```
-3. Publish the Pirsch config file if you wish to exclude specific routes:
+3. Publish the Pirsch config file if you wish to exclude specific headers or routes:
    ```bash
    artisan vendor:publish --tag pirsch-config
    ```
 
+```php
+return [
+    'token'           => env('PIRSCH_TOKEN'),
+    // If you wish you exclude dashboard routes, you'd add dashboard/
+    'excluded_routes' => [
+        'telescope/',
+        'horizon/',
+        // 'dashboard/'
+    ],
+    // If you wish to exclude additional headers, you can add them here
+    'excluded_headers' => [
+        'X-Livewire',
+        // 'X-ExcludeMe',
+    ],
+];
+```
+
 ## Usage
 
-### Track pageviews
+### Track page views
 
 #### Automatically
 

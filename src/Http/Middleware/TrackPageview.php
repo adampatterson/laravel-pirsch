@@ -17,8 +17,10 @@ class TrackPageview
             return $response;
         }
 
-        if ($request->hasHeader('X-Livewire')) {
-            return $response;
+        foreach (config('pirsch.excluded_headers') as $header) {
+            if ($request->hasHeader($header)) {
+                return $response;
+            }
         }
 
         foreach (config('pirsch.excluded_routes') as $route) {

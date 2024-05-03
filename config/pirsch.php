@@ -8,4 +8,9 @@ return [
         'horizon/',
         // 'dashboard/'
     ],
+
+    'excluded_headers' => [
+        'X-Livewire',
+        // 'X-ExcludedHeader',
+    ],
 ];
