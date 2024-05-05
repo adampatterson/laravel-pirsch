@@ -9,7 +9,7 @@ it('handles request', function () {
         ->once();
 
     Route::middleware(TrackPageview::class)
-        ->get('/', fn () => 'Hello World');
+        ->get('/', fn() => 'Hello World');
 
     $this->get('/');
 });
@@ -18,7 +18,7 @@ it('skips redirects', function () {
     Pirsch::spy();
 
     Route::middleware(TrackPageview::class)
-        ->get('/', fn () => redirect('/home'));
+        ->get('/', fn() => redirect('/home'));
 
     $this->get('/');
 
@@ -29,7 +29,7 @@ it('skips Livewire', function () {
     Pirsch::spy();
 
     Route::middleware(TrackPageview::class)
-        ->get('/', fn () => 'Hello World');
+        ->get('/', fn() => 'Hello World');
 
     $this->get('/', ['X-Livewire' => 'true']);
 
@@ -40,9 +40,35 @@ it('skips Telescope', function () {
     Pirsch::spy();
 
     Route::middleware(TrackPageview::class)
-        ->get('telescope/test', fn () => 'Hello World');
+        ->get('telescope/test', fn() => 'Hello World');
 
     $this->get('/telescope/test');
+
+    Pirsch::shouldNotHaveBeenCalled();
+});
+
+it('skips custom Route', function () {
+    config(['pirsch.excluded_routes' => ['dashboard/']]);
+
+    Pirsch::spy();
+
+    Route::middleware(TrackPageview::class)
+        ->get('dashboard/', fn() => 'Hello World');
+
+    $this->get('/dashboard/');
+
+    Pirsch::shouldNotHaveBeenCalled();
+});
+
+it('skips custom Header', function () {
+    config(['pirsch.excluded_headers' => ['X-Custom']]);
+
+    Pirsch::spy();
+
+    Route::middleware(TrackPageview::class)
+        ->get('/', fn() => 'Hello World');
+
+    $this->get('/', ['X-Custom' => 'true']);
 
     Pirsch::shouldNotHaveBeenCalled();
 });
