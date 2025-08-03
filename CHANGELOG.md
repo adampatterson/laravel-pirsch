@@ -1,5 +1,17 @@
 # Changelog
 
+## [1.0.0] - 2025-03-20
+
+### Added
+
+- Improve Middleware except.
+
+## [0.4.10] - 2025-03-20
+
+### Added
+
+- Add Laravel 12 support.
+
 ## [0.4.9] - 2024-03-05
 
 ### Added
